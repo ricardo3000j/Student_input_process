@@ -9,5 +9,12 @@ def input_deserializer(input) -> list[list[str]]:
     return raw_data
 
 
-def output_serializer(report):
-    pass
+def output_serializer(records):
+    """Serialize records to string"""
+    serialized_output = ""
+    for record in records:
+        serialized_record = (
+            f"{record.name}: {record.time} minutes in {record.days} days \n"
+        )
+        serialized_output += serialized_record
+    return serialized_output

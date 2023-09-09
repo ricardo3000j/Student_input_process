@@ -1,10 +1,15 @@
 import logging
 from src.student_input import StudentInput
-from src.db import student_registry
+from src.report_output import OutputReport
+
 logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
+    logger.info("Starting program")
     student_input = StudentInput()
-    student_input.get_processed_data()
-    print(student_registry.__dict__)
+    student_input.insert_input_data()
+    report_output = OutputReport()
+    report_output.generate_report()
+    report_output.generate_output()
+    logger.info("Finished program")

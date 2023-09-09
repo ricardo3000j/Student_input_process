@@ -1,7 +1,10 @@
-from src.data_wrangler import data_pipeline
+from src.data_wrangler import input_pipeline
 from src.serializers import input_deserializer
 from src.utils import validate_args, validate_file
 import sys
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class StudentInput:
@@ -11,10 +14,12 @@ class StudentInput:
 
     def _get_input(self):
         """Get input from file"""
+        logger.info("Getting input from file")
         validate_args()
         validate_file(sys.argv[1])
         return sys.argv[1]
 
-    def get_processed_data(self):
-        self.data = data_pipeline(self.raw_data)
-        return self.data
+    def insert_input_data(self):
+        """Insert input data into registry"""
+        logger.info("Inserting input data into registry")
+        self.data = input_pipeline(self.raw_data)
