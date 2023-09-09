@@ -1,8 +1,10 @@
 import logging
-from src.utils import get_input
+from src.student_input import StudentInput
+from src.db import student_registry
 logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
-    input = get_input()
-    print(input)
+    student_input = StudentInput()
+    student_input.get_processed_data()
+    print(student_registry.__dict__)

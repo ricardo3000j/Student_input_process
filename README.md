@@ -1,7 +1,7 @@
 # Student_input_process
 
 ## Stack del proyecto
-- Python 3.10
+- Python 3.10.11
 
 ## Requerimientos funcionales
 ## Requerimientos no funcionales
@@ -14,9 +14,9 @@
 
 `data.py` - Estructura de datos que almacenara el input para simular BD
 
-`/data_wrangler.py` - Modulo para limpieza y transformacion de datos
+`src/data_wrangler.py` - Modulo para limpieza y transformacion de datos
 
-`src/serializers/report_creation.py` - modulo para generar reporte de salida a partir de la data procesada  
+`src/report_creation.py` - modulo para generar reporte de salida a partir de la data procesada  
 `src/serializers/report_serializer.py` - Serializar reporte para generar output
 `src/serializers/input_deserializer.py` - Modulo que procesara input.txt para convertirlo en la estructura de datos deseada
 
@@ -36,6 +36,7 @@
 Input error handler:
 -1 Empty line
 -2 Solo comando
+-3 sin comando
 -3 missing student name
 -4 wrong time format 
 -5 Sin hora de entrada
