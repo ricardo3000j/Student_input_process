@@ -1,6 +1,6 @@
 from src.utils.regex import is_valid_name, is_number
 from src.utils.enums import Commands
-from src.utils.time_validator import validate_hour_format
+from src.utils.time_validator import string_to_datetime, validate_hour_format
 
 
 class Validator:
@@ -21,6 +21,12 @@ class Validator:
         return is_number(day) and int(day) > 0 and int(day) < 8
 
     @classmethod
+    def time_interval(cls, begin_time, end_time):
+        begin_time = string_to_datetime(begin_time)
+        end_time = string_to_datetime(end_time)
+        return begin_time < end_time
+
+    @classmethod
     def validate_presence(cls, row):
         row_len = len(row)
         # removing row with len < 5,
@@ -38,7 +44,10 @@ class Validator:
         # validate end time
         if row_len > 4 and not Validator.hour(row[4]):
             return False
+        # validate end time must be greater than begin time
 
+        if not Validator.time_interval(row[3], row[4]):
+            return False
         # validate classroom and fill it with default string
         if row[0] == Commands.Presence and row_len == 5:
             row.append("default classroom")
