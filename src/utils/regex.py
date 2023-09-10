@@ -13,4 +13,7 @@ def contains_number(string: str) -> bool:
 
 def is_valid_name(string: str) -> bool:
     """Check if string is a valid name"""
-    return not is_number(string) and not contains_number(string)
+    valid_name = (
+        not is_number(string) and not contains_number(string) and len(string) > 0
+    )
+    return valid_name
