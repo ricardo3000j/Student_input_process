@@ -1,4 +1,6 @@
 from .serializers import output_serializer
+from .utils.enums import SortBy, SortType
+from .data_wrangler import sort_by_param
 from .db import student_registry
 from .models import StudentAttendanceRegistry, OutputRecord
 import logging
@@ -19,16 +21,21 @@ class OutputReport:
             cls._instance = super(OutputReport, cls).__new__(cls)
         return cls._instance
 
-    @property
-    def serialized_output(self):
+    def serialized_output(
+        self, sort_by: SortBy | None = None, sort_type: SortType | None = None
+    ):
         """serialized report records"""
         logger.info("Getting serialized output")
-        records = self.__dict__.values()
+        records = list(self.__dict__.values())
+        if sort_by and sort_type:
+            records = sort_by_param(records, sort_by, sort_type)
         return output_serializer(records)
 
-    def generate_output(self):
-        """Generate report output"""
-        serialized_output = self.serialized_output
+    def generate_output(
+        self, sort_by: SortBy | None = None, sort_type: SortType | None = None
+    ):
+        """Generate output of report"""
+        serialized_output = self.serialized_output(sort_by, sort_type)
         logger.info("Generating output")
         with open("output.txt", "w") as file:
             file.write(serialized_output)
@@ -41,6 +48,7 @@ class OutputReport:
             logger.info(f"Generating report for student: {student}")
             record = self.generate_record(student, attendances)
             self.__setattr__(student, record)
+            logger.info(f"Report generated for student: {student}")
 
     def generate_record(
         self, student, attendances: list[StudentAttendanceRegistry]
