@@ -1,6 +1,6 @@
 from src.utils.enums import Commands
 from src.utils.time_validator import string_to_datetime
-from src.filters import Filters
+from src.validators import Validator
 from src.models import StudentAttendanceRegistry
 from src.db import insert_attendance_registry, insert_student_registry
 from .utils.enums import SortBy, SortType
@@ -19,8 +19,6 @@ def group_by_command(data):
     """Create a dict to group by command"""
     rows_by_command = {}
     for row in data:
-        if not Filters.valid_command(row[0]):
-            continue
         if not row[0] in rows_by_command:
             rows_by_command[row[0]] = []
         rows_by_command[row[0]].append(row)
@@ -28,11 +26,9 @@ def group_by_command(data):
 
 
 def group_by_student_name(data):
-    """Create a dict to group by student name"""
+    """Create a dict to group by student name and parse to StudentAttendanceRegistry"""
     rows_by_student_name = {}
     for row in data:
-        if not Filters.valid_name(row[1]):
-            continue
         if not row[1] in rows_by_student_name:
             rows_by_student_name[row[1]] = []
         attendace_object = StudentAttendanceRegistry(
@@ -42,6 +38,7 @@ def group_by_student_name(data):
             end_time=string_to_datetime(row[4]),
             classroom=row[5],
         )
+
         rows_by_student_name[row[1]].append(attendace_object)
     return rows_by_student_name
 
@@ -51,20 +48,9 @@ def data_cleaner(raw_data):
     clean_data = []
     for row in raw_data:
         # Filters to remove invalid rows
-        if not row:  # remover entradas vacias
-            continue
-        # Valid command filter
-        if not Filters.valid_command(row[0]):
-            continue
+        if Validator.validate_row(row): 
+            clean_data.append(row)
 
-        # validate student name
-        if not Filters.valid_name(row[1]):
-            continue
-
-        # validate day of week
-        # if is_number(row[2]) and
-
-        clean_data.append(row)
     return clean_data
 
 

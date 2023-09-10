@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+"""Datastructure to store students"""
 
 class StudentsRegistry:
     """object to store students"""
