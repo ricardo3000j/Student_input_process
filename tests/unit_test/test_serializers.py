@@ -27,11 +27,11 @@ class TestSerializer(unittest.TestCase):
             # Testing for empty records list
             ([], ""),
             # Testing for a single record
-            ([OutputRecord("Marco", 60, 2)], "Marco: 60 minutes in 2 days \n"),
+            ([OutputRecord("Marco", 60, 2)], "Marco: 60 minutes in 2 days\n"),
             # Testing for multiple records
             (
                 [OutputRecord("Marco", 60, 2), OutputRecord("Frank", 30, 1)],
-                "Marco: 60 minutes in 2 days \nFrank: 30 minutes in 1 days \n",
+                "Marco: 60 minutes in 2 days\nFrank: 30 minutes in 1 day\n",
             ),
         ]
 

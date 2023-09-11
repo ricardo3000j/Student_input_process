@@ -39,8 +39,8 @@ class OutputReport:
         logger.info("Generating output")
         with open("output.txt", "w") as file:
             file.write(serialized_output)
-        print(serialized_output)
         logger.info("Output generated")
+        return serialized_output
 
     def generate_report(self):
         """Generate report for all students"""
@@ -50,8 +50,9 @@ class OutputReport:
             self.__setattr__(student, record)
             logger.info(f"Report generated for student: {student}")
 
+    @classmethod
     def generate_record(
-        self, student, attendances: list[StudentAttendanceRegistry]
+        cls, student, attendances: list[StudentAttendanceRegistry]
     ) -> OutputRecord:
         """Generate student attendance entry"""
         time_counter = 0
@@ -60,7 +61,7 @@ class OutputReport:
         for attendance in attendances:
             attendance_time = attendance.end_time - attendance.begin_time
             attendance_time = attendance_time.total_seconds()
-            if attendance_time > 300:
+            if attendance_time >= 300:
                 time_counter += attendance_time
                 days_counter += 1
 
