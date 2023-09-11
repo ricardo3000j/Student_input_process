@@ -28,3 +28,6 @@ Presence Marco 8
 Presence Marco 5 Hola 
 Presence Marco 5 14:02
 Presence Marco 5 14:02 Hola
+
+Student Ricardo
+Presence Ricardo 1 10:02 15:50

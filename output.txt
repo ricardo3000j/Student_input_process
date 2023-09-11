@@ -1,3 +1,4 @@
+Ricardo: 348 minutes in 1 day
 Marco: 142 minutes in 2 days
 David: 104 minutes in 1 day
 Fran: 0 minutes
