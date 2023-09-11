@@ -12,7 +12,6 @@ class TestMainApp(unittest.TestCase):
         mock_file = mock_open.return_value
         mock_file.read.return_value = get_file_content()
         output = main.app()
-        print(output)
         self.assertEqual(output, get_expected_result())
 
 
