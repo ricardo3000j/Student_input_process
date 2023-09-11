@@ -12,15 +12,6 @@ logger = logging.getLogger(__name__)
 class OutputReport:
     """Model for report object"""
 
-    """singleton pattern"""
-    _instance = None
-
-    def __new__(cls):
-        logger.info("Creating OutputReport")
-        if cls._instance is None:
-            cls._instance = super(OutputReport, cls).__new__(cls)
-        return cls._instance
-
     def serialized_output(
         self, sort_by: SortBy | None = None, sort_type: SortType | None = None
     ):
