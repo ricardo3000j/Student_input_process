@@ -1,7 +1,7 @@
 from src.utils.enums import Commands
 from src.utils.time_validator import string_to_datetime
 from src.validators import Validator
-from src.models import StudentAttendanceRegistry
+from src.models import StudentAttendanceRegistry, OutputRecord
 from src.db import insert_attendance_registry, insert_student_registry
 from .utils.enums import SortBy, SortType
 import logging
@@ -43,7 +43,7 @@ def group_by_student_name(data):
             rows_by_student_name[row[1]] = []
         attendace_object = StudentAttendanceRegistry(
             name=row[1],
-            weekday=row[2],
+            weekday=int(row[2]),
             begin_time=string_to_datetime(row[3]),
             end_time=string_to_datetime(row[4]),
             classroom=row[5],
@@ -65,7 +65,7 @@ def data_cleaner(raw_data):
     return clean_data
 
 
-def sort_by_param(records, sort_by: SortBy, sort_type: SortType):
+def sort_by_param(records: OutputRecord, sort_by: SortBy, sort_type: SortType):
     """quick sort algorithm to sort records by element and sort_type"""
     if len(records) <= 1:
         return records

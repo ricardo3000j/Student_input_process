@@ -1,4 +1,6 @@
+from io import StringIO
 import unittest
+from unittest.mock import patch
 
 from src.utils.regex import (
     is_valid_name,
@@ -7,6 +9,7 @@ from src.utils.regex import (
     contains_special_characters,
 )
 from src.utils.time_validator import validate_hour_format
+from src.utils import validate_file
 
 
 class TestUtilsRegex(unittest.TestCase):
@@ -111,6 +114,18 @@ class TestUtilsRegex(unittest.TestCase):
                     validate_hour_format(string),
                     expected_result,
                 )
+
+    @patch("sys.exit")
+    def test_valid_file_extension(self, mock_exit):
+        validate_file("test.txt")
+        self.assertFalse(mock_exit.called)
+
+    @patch("sys.exit")
+    def test_invalid_file_extension(self, mock_exit):
+        with patch("sys.stderr", new=StringIO()) as fake_stderr:
+            validate_file("test.csv")
+            self.assertEqual(fake_stderr.getvalue().strip(), "Invalid file extension")
+        mock_exit.assert_called_with(1)
 
 
 if __name__ == "__main__":

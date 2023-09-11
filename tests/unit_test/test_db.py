@@ -34,8 +34,8 @@ class TestInsertAttendanceRegistry(unittest.TestCase):
             ]
         }
         insert_attendance_registry(student_attendance)
-        assert isinstance(student_registry.__getattribute__("Marcos"), list)
-        assert isinstance(
+        self.assertIsInstance(student_registry.__getattribute__("Marcos"), list)
+        self.assertIsInstance(
             student_registry.__getattribute__("Marcos")[0],
             StudentAttendanceRegistry
         )
